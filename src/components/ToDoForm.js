@@ -3,25 +3,33 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ButtonAdd, Container, IconPlus, TextInput } from "./Styles.styled";
 
-export const TodoForm = ({ addTodo }) => {
+export const TodoForm = ({ addTodo, editTodo }) => {
   const [value, setValue] = useState("");
 
   const sendSubmit = (e) => {
     e.preventDefault();
 
-    setValue("");
-
-    if (!value) {
+    if (value === "") {
       toast.warn("Please, fill field", {
         position: toast.POSITION.TOP_RIGHT,
+        autoClose: 2000,
       });
       return;
     }
 
+    setValue("");
     addTodo(value);
 
     if (value) {
       toast.success("Task added", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 2000,
+      });
+      return;
+    }
+
+    if (value) {
+      toast.success("Task success edited", {
         position: toast.POSITION.TOP_RIGHT,
       });
     }
@@ -42,7 +50,7 @@ export const TodoForm = ({ addTodo }) => {
           </ButtonAdd>
         </Container>
 
-        <ToastContainer />
+        <ToastContainer newestOnTop={false} />
       </form>
     </div>
   );
